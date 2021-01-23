@@ -1,18 +1,55 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
-</template>
-
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import CustomDialog from "@/components/customDialog/CustomDialog.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
+    CustomDialog
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    showDialog() {
+      this.$customDialog(
+        "标题",
+        this.renderContent,
+        this.handleOk,
+        this.handleCancel
+      );
+    },
+    handleOk(value) {
+      return new Promise((resolve, reject) => {
+        resolve(1);
+      });
+    },
+    handleCancel(value) {
+      return new Promise((resolve, reject) => {
+        resolve(1);
+      });
+    },
+    renderContent() {
+      return (
+        <div>
+          fsdfdgfdneir内容
+          <button
+            onClick={() => {
+              alert("55");
+            }}
+          >
+            dd
+          </button>
+        </div>
+      );
+    }
+  },
+  mounted() {},
+  render() {
+    return (
+      <div>
+        <button onClick={this.showDialog}>dd</button>
+      </div>
+    );
   }
-}
+};
 </script>
