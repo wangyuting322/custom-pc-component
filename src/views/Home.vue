@@ -1,53 +1,60 @@
 <script>
-import CustomDialog from "@/components/customDialog/CustomDialog.vue";
 
 export default {
   name: "Home",
   components: {
-    CustomDialog
+
   },
-  data() {
+  data () {
     return {};
   },
   methods: {
-    showDialog() {
-      this.$customDialog(
-        "标题",
-        this.renderContent,
-        this.handleOk,
-        this.handleCancel
+    showDialog () {
+      this.$customDialog({
+        title: "标题",
+        content: this.renderContent,
+        onOnk: this.handleOk,
+        onCancel: this.handleCancel,
+        // isFooter: false,
+        // isFull: false,
+        // dialogStyle: {
+        //   height: '400px'
+        // }
+      }
       );
     },
-    handleOk(value) {
+    /**
+     * 弹窗ok事件
+     */
+    handleOk (value) {
       return new Promise((resolve, reject) => {
-        resolve(1);
+        resolve();
       });
     },
-    handleCancel(value) {
+    /**
+     * 弹窗cancel事件
+     */
+    handleCancel (value) {
       return new Promise((resolve, reject) => {
-        resolve(1);
+        resolve();
       });
     },
-    renderContent() {
+    /**
+     * 弹窗内容
+     */
+    renderContent () {
       return (
         <div>
           fsdfdgfdneir内容
-          <button
-            onClick={() => {
-              alert("55");
-            }}
-          >
-            dd
-          </button>
         </div>
       );
     }
   },
-  mounted() {},
-  render() {
+  mounted () { },
+  render () {
     return (
       <div>
-        <button onClick={this.showDialog}>dd</button>
+        <button onClick={this.showDialog}>弹窗</button>
       </div>
     );
   }

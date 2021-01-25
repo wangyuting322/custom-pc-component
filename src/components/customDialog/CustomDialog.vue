@@ -15,7 +15,7 @@ export default {
     // 非满屏状态下的对话框样式
     dialogStyle: {
       type: Object,
-      default() {
+      default () {
         return {};
       }
     },
@@ -26,19 +26,14 @@ export default {
       return true;
     }
   },
-  data() {
+  data () {
     return {
       // 是否显示
       isVisible: false
     };
   },
   computed: {
-    customDialogStyle() {
-      if (!this.isVisible) {
-        return {
-          display: "none"
-        };
-      }
+    customDialogStyle () {
       if (this.isFull) {
         return {
           position: "fixed",
@@ -48,18 +43,10 @@ export default {
           right: "0px",
           width: "100vw",
           height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "stretch"
         };
       } else {
         return {
-          // width: "100%",
-          position: "relative",
           ...this.dialogStyle,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "stretch"
         };
       }
     }
@@ -68,23 +55,23 @@ export default {
     /**
      * 关闭
      **/
-    async handleCancel() {
+    async handleCancel () {
       let res = await this.cancel();
       this.isVisible = false;
-      // this.$emit("cancel", this);
+      this.$emit("cancel", this);
     },
     /**
      * 确定
      **/
-    async handleOk() {
+    async handleOk () {
       let res = await this.ok();
       this.isVisible = false;
-      // this.$emit("ok", this);
+      this.$emit("ok", this);
     }
   },
   watch: {},
-  mounted() {},
-  render() {
+  mounted () { },
+  render () {
     return (
       <div
         class="custom-dialog"
@@ -107,7 +94,7 @@ export default {
           </div>
         </div>
         {/**内容 */}
-        <div class="custom-dialog-body">{this.$slots.content}</div>
+        <div class="custom-dialog-body">sss</div>
         {/**按钮 */}
         <div class="custom-dialog-footer" v-show={this.isFooter}>
           {/**标题右侧控制器 */}
@@ -136,6 +123,16 @@ export default {
   background-color: #fff;
   border-radius: 10px;
   border: 1px solid #e8e8e8;
+  position: "fixed";
+  top: "0px";
+  bottom: "0px";
+  left: "0px";
+  right: "0px";
+  width: "100vw";
+  height: "100vh";
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 .custom-dialog-header {
   flex-grow: 0;
@@ -178,6 +175,7 @@ export default {
   margin-left: 8px;
 }
 .custom-dialog-body {
+  background-color: #1890ff;
   flex-grow: 1;
   flex-shrink: 1;
   padding: 24px;
