@@ -175,7 +175,6 @@ export default {
   margin-left: 8px;
 }
 .custom-dialog-body {
-  background-color: #1890ff;
   flex-grow: 1;
   flex-shrink: 1;
   padding: 24px;
