@@ -15,7 +15,7 @@ export default {
         content: this.renderContent,
         onOnk: this.handleOk,
         onCancel: this.handleCancel,
-        // isFooter: false,
+        isFooter: true,
         // isFull: false,
         // dialogStyle: {
         //   height: '400px'
@@ -41,11 +41,19 @@ export default {
     },
     /**
      * 弹窗内容
+     * tips:如果内容为组件，组件中需要调用store，则直接用store，不要用this.$store（指针异常）
      */
     renderContent () {
       return (
         <div>
           fsdfdgfdneir内容
+          <button onClick={() => {
+            this.$customDialog({
+              title: "ss标题",
+              content: 'this.renderContent',
+              isFooter: true,
+            })
+          }}>4546</button>
         </div>
       );
     }

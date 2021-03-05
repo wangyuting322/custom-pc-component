@@ -1,13 +1,19 @@
 <script>
+import store from '@/store'
+
 export default {
-  name: "CustomDialog",
+  name: "ZhFullDialog",
+  store,
+  components: {
+
+  },
   props: {
-    // 是否显示底部按钮
+    // 是否显示底部按钮
     isFooter: {
       type: Boolean,
       default: false
     },
-    // 是否满屏
+    // 是否满屏
     isFull: {
       type: Boolean,
       default: true
@@ -19,16 +25,28 @@ export default {
         return {};
       }
     },
-    ok: () => {
-      return true;
+    ok: {
+      type: Function,
+      default: () => {
+        return true
+      }
     },
-    cancel: () => {
-      return true;
+    cancel: {
+      type: Function,
+      default: () => {
+        return true
+      }
+    },
+    title: {
+      type: String || Function
+    },
+    content: {
+      type: String || Function
     }
   },
   data () {
     return {
-      // 是否显示
+      // 是否显示
       isVisible: false
     };
   },
@@ -56,83 +74,110 @@ export default {
      * 关闭
      **/
     async handleCancel () {
-      let res = await this.cancel();
+      this.cancel && await this.cancel();
       this.isVisible = false;
-      this.$emit("cancel", this);
     },
     /**
      * 确定
      **/
     async handleOk () {
-      let res = await this.ok();
+      this.ok && await this.ok();
       this.isVisible = false;
-      this.$emit("ok", this);
     }
   },
-  watch: {},
-  mounted () { },
+  watch: {
+    isVisible: {
+      handler (v) {
+        if (v === false) {
+          this.$emit("close")
+        }
+      }
+    }
+  },
+  mounted () {
+  },
   render () {
     return (
-      <div
-        class="custom-dialog"
-        v-show={this.isVisible}
-        style={this.customDialogStyle}
-      >
-        {/**头部 */}
-        <div class="custom-dialog-header">
-          {/**标题 */}
-          <div class="custom-dialog-header-title">{this.$slots.title}</div>
-          {/**标题右侧控制器 */}
-          <div class="custom-dialog-header-controller">
-            <div
-              class="header-controller close-controller pointer"
-              onClick={this.handleCancel}
-              title="关闭"
-            >
-              X
+      <transition name="slide-fade">
+        <div
+          class="custom-dialog"
+          v-show={this.isVisible}
+          style={this.customDialogStyle}
+        >
+          {/**头部 */}
+          <div class="custom-dialog-header">
+            {/**标题 */}
+            <div class="custom-dialog-header-title">{
+              this.$slots.title || (typeof this.title === "function" ? this.title(h) : this.title)
+            }</div>
+            {/**标题右侧控制器 */}
+            <div class="custom-dialog-header-controller">
+              <div
+                class="header-controller close-controller pointer"
+                onClick={this.handleCancel}
+                title="关闭"
+              >
+                X
+            </div>
+            </div>
+          </div>
+          {/**内容 */}
+          <div class="custom-dialog-body" v-show={this.isVisible} > {
+            this.$slots.default || (typeof this.content === "function" ? this.content(h) : this.content)
+          }</div>
+          {/**按钮 */}
+          <div class="custom-dialog-footer" v-show={this.isFooter}>
+            {/**标题右侧控制器 */}
+            <div class="custom-dialog-footer-controller">
+              <div
+                class="footer-controller cancel-button pointer"
+                onClick={this.handleCancel}
+              >
+                取消
+            </div>
+              <div
+                class="footer-controller ok-button pointer"
+                onClick={this.handleOk}
+              >
+                确定
+            </div>
             </div>
           </div>
         </div>
-        {/**内容 */}
-        <div class="custom-dialog-body">sss</div>
-        {/**按钮 */}
-        <div class="custom-dialog-footer" v-show={this.isFooter}>
-          {/**标题右侧控制器 */}
-          <div class="custom-dialog-footer-controller">
-            <div
-              class="footer-controller cancel-button pointer"
-              onClick={this.handleCancel}
-            >
-              取消
-            </div>
-            <div
-              class="footer-controller ok-button pointer"
-              onClick={this.handleOk}
-            >
-              确定
-            </div>
-          </div>
-        </div>
-      </div>
+      </transition>
+
     );
   }
 };
 </script>
 <style>
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: scale(0.5);
+  opacity: 0;
+}
 .custom-dialog {
   background-color: #fff;
   border-radius: 10px;
   border: 1px solid #e8e8e8;
-  position: "fixed";
-  top: "0px";
-  bottom: "0px";
-  left: "0px";
-  right: "0px";
-  width: "100vw";
-  height: "100vh";
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  overflow: auto;
+  z-index: 1000;
 }
 .custom-dialog-header {
   flex-grow: 0;
@@ -177,7 +222,7 @@ export default {
 .custom-dialog-body {
   flex-grow: 1;
   flex-shrink: 1;
-  padding: 24px;
+  padding: 8px;
   font-size: 14px;
   line-height: 1.5;
   text-align: left;
