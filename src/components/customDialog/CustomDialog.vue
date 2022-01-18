@@ -1,9 +1,6 @@
 <script>
-import store from '@/store'
-
 export default {
   name: "ZhFullDialog",
-  store,
   components: {
 
   },
