@@ -9,17 +9,16 @@ export default {
     return {};
   },
   methods: {
+    /**
+     * 显示弹窗
+     */
     showDialog () {
       this.$customDialog({
         title: "标题",
         content: this.renderContent,
-        onOnk: this.handleOk,
+        onOk: this.handleOk,
         onCancel: this.handleCancel,
         isFooter: true,
-        // isFull: false,
-        // dialogStyle: {
-        //   height: '400px'
-        // }
       }
       );
     },
@@ -27,8 +26,10 @@ export default {
      * 弹窗ok事件
      */
     handleOk (value) {
-      return new Promise((resolve, reject) => {
-        resolve();
+       return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 2000);
       });
     },
     /**
@@ -41,19 +42,25 @@ export default {
     },
     /**
      * 弹窗内容
-     * tips:如果内容为组件，组件中需要调用store，则直接用store，不要用this.$store（指针异常）
      */
     renderContent () {
       return (
         <div>
-          fsdfdgfdneir内容
+          我是第一个全屏弹窗,点击确定按钮时，两秒之后才关闭哦~~~
           <button onClick={() => {
             this.$customDialog({
-              title: "ss标题",
-              content: 'this.renderContent',
+              title: "二次弹窗",
+              isFull: false,
+              dialogStyle: {
+                width: '30%',
+                height: '30%',
+                margin: 'auto',
+                padding: '0'
+              },
+              content:'我居中了( •̀ ω •́ )y，我的长度和高度都是30%吼',
               isFooter: true,
             })
-          }}>4546</button>
+          }}>二次弹窗</button>
         </div>
       );
     }

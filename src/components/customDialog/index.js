@@ -1,5 +1,6 @@
 // @ts-nocheck
 import CustomDialog from './CustomDialog.vue';
+
 CustomDialog.install = (Vue) => {
   Vue.component(CustomDialog.name, CustomDialog);
   // 创建组件构造器

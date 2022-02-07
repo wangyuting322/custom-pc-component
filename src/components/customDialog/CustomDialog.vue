@@ -1,6 +1,9 @@
 <script>
+/**
+ * 自定义的弹窗
+ */
 export default {
-  name: "ZhFullDialog",
+  name: "FullDialog",
   components: {
 
   },
@@ -78,6 +81,7 @@ export default {
      * 确定
      **/
     async handleOk () {
+      console.log( this.ok);
       this.ok && await this.ok();
       this.isVisible = false;
     }
@@ -92,6 +96,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$state.state.count);
   },
   render () {
     return (
@@ -156,7 +161,7 @@ export default {
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active for below version 2.1.8 */ {
-  transform: scale(0.5);
+  transform: scale(0.1);
   opacity: 0;
 }
 .custom-dialog {
