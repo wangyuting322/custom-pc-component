@@ -74,7 +74,9 @@ export default {
       const tagArr = cacheValue.filter((item, index) => index !== (cacheValue.length - 1)).map(item => ({ name: item }))
       // 去除重复的tag
       this.tagArr = [...this.tagArr, ...tagArr]
+      this.$emit('change', this.tagArr)
       this.textValue = cacheValue[cacheValue.length - 1]
+      this.changeTagArr()
       this.$nextTick(() => {
         const input = this.$refs['tag-input']
         if (input) {
@@ -115,6 +117,7 @@ export default {
      */
     handleDelTag (index) {
       this.tagArr.splice(index, 1)
+      this.changeTagArr()
     },
     /**
      * 修改名字
@@ -154,17 +157,23 @@ export default {
     confirmName () {
       const { id, name, index } = this.nameItem
       this.tagArr.splice(index, 1, { id, name })
+      this.changeTagArr()
       this.nameItem = null
+    },
+    /**
+     * 触发修改tagArr的事件
+     */
+    changeTagArr(){
+      this.$emit('change',this.tagArr)
     },
     /**
      * 渲染tag
      */
     renderTagItem (item, index) {
-      const { id, name } = item
+      const { id, name,cacheKey } = item
       const { nameItem } = this
       return (
-        <transition name='scaleX'>
-          <div class='tag-item flex-row flex-ai-baseline m2 pl5 pr5 border-box' onClick={cancelBubble}>
+          <div class='tag-item flex-row flex-ai-baseline m2 pl5 pr5 border-box' key={cacheKey} onClick={cancelBubble}>
             {
               nameItem && nameItem.index === index ? (
                 <textarea
@@ -183,21 +192,14 @@ export default {
             }
             <div class='tag-item-del flex-row flex-ai-center flex-jc-center ml5 mt3 mb3 pointer' onClick={() => this.handleDelTag(index)}>x</div>
           </div>
-        </transition>
       )
     }
   },
   watch: {
-    tagArr: {
-      handler (newV) {
-        this.$emit('change', newV)
-      },
-      deep: true
-    },
     value: {
       handler (newV) {
         if (newV) {
-          this.tagArr = newV
+          this.tagArr=newV
         } else {
           this.tagArr = []
         }

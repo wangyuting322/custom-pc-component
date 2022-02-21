@@ -1,5 +1,6 @@
 @import "./size.scss";
 @import "./color.scss";
+@import "./_handle.scss";
 
 /*字体*/
 html,
@@ -12,8 +13,17 @@ body ,
   overflow: hidden;
   font-weight: bold;
 }
+body {
+  font-size: 18px;
+  @include font_color("font_color1");
+  @include background_color("background_color4");
+  @include border_color("border_color4");
+}
 #app{
   font-size: $large-size;
+  @include font_color("font_color1");
+  @include background_color("background_color4");
+  @include border_color("border_color4");
 }
 .bgfff{
   background-color: #fff;
