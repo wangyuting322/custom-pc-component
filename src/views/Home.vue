@@ -6,7 +6,9 @@ export default {
 
   },
   data () {
-    return {};
+    return {
+      tagArr:[]
+    };
   },
   methods: {
     /**
@@ -69,7 +71,14 @@ export default {
   render () {
     return (
       <div>
+      <div>
+      <span>1、自定义弹窗</span>
         <button onClick={this.showDialog}>弹窗</button>
+      </div>
+      <div>
+      <span>2、标签输入框，使用空格进行分割</span>
+        <TagInput v-model={this.tagArr}></TagInput>
+      </div>
       </div>
     );
   }
