@@ -18,12 +18,14 @@ body {
   @include font_color("font_color1");
   @include background_color("background_color4");
   @include border_color("border_color4");
+  transition: background-color .5s;  
 }
 #app{
   font-size: $large-size;
   @include font_color("font_color1");
   @include background_color("background_color4");
   @include border_color("border_color4");
+  transition: background-color .5s;  
 }
 .bgfff{
   background-color: #fff;

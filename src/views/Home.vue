@@ -107,7 +107,7 @@ export default {
           <div id="textarea" contenteditable="true" placeholder="请输入文字,不得少于100字"></div>
         </div>
         <div class='flex-row'>
-          <span>5、修改主题色</span>
+          <span>5、修改主题色（transition: background-color进行过渡）</span>
           {
             this.theme.map(item => {
               let { text, theme } = item
@@ -128,5 +128,7 @@ export default {
   @include font_color("font_color1");
   @include background_color("background_color4");
   @include border_color("border_color4");
+  // 颜色渐变
+  transition: background-color .5s;  
 }
 </style>
