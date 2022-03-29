@@ -116,6 +116,10 @@ export default {
           }
           <div class='common-util' style='width:100px;height:100px;'></div>
         </div>
+        <div class='flex-row'>
+          <span>6、数字动画</span>
+         <NumAnimation fromNum={-2666665} toNum={31310.55} toColor='#D32F2F' distanceNum={0}></NumAnimation>
+        </div>
       </div>
     );
   }
