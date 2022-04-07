@@ -126,11 +126,7 @@ body {
 .width50 {
   width: 50%;
 }
-.ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+
 .border-box {
   /* 常规 */
   box-sizing: border-box;
@@ -145,6 +141,12 @@ body {
 }
 .align-center {
   text-align: center;
+}
+// 省略
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 //循环一些常用间距
 @for $i from 0 through 44 {
