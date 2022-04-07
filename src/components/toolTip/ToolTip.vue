@@ -12,10 +12,6 @@ export default {
       type: Number,
       default: 1
     },
-    outerWidth: {
-      type: Number,
-      default: 120
-    },
     content: {
       type: String | Number,
       default: ''
@@ -71,7 +67,7 @@ export default {
           placement='top'
           {...{ props: { ...this.tooltipProps }, attrs: { ...this.tooltipProps } }}
         >
-           <div class={`${this.lineNum === 1 ? 'ellipsis' : `ellipsis-line-${this.lineNum}`}`} style={{ width: this.outerWidth + 'px' }} onMouseenter={this.hanldeShowTooltip}>
+           <div class={`${this.lineNum === 1 ? 'ellipsis' : `ellipsis-line-${this.lineNum}`}`}  onMouseenter={this.hanldeShowTooltip}>
             {this.content}
           </div>
         </el-tooltip>

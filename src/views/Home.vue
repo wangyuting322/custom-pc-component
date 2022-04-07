@@ -120,12 +120,12 @@ export default {
           <span>6、数字动画</span>
          <NumAnimation fromNum={-2666665} toNum={31310.55} toColor='#D32F2F' distanceNum={0}></NumAnimation>
         </div>
-        <div class='flex-col'>
+        <div class='flex-col'></div>
           <div>7、自动省略显示tooltip</div>
-          <ToolTip lineNum={1} outerWidth={80} content={'4545fddsadafsafasffds'}></ToolTip>
-          <ToolTip lineNum={1} outerWidth={80} content={'4545'}></ToolTip>
-          <ToolTip lineNum={3} outerWidth={80} content={'454fsfsafasfaFsafasfbsahf飞洒发生asffasjfsakbfas飞洒发你拉石帆胜丰5'}></ToolTip>
-          <ToolTip lineNum={1} outerWidth={80} content={'4545'}></ToolTip>
+          <ToolTip lineNum={1} content={'4545fddsadafsafasffds'}></ToolTip>
+          <ToolTip lineNum={1} content={'4545'}></ToolTip>
+          <ToolTip lineNum={3} content={'454fsfsafasfaFsafasfbsahf飞洒发生asffasjfsakbfas飞洒发你拉石帆胜丰5'}></ToolTip>
+          <ToolTip lineNum={1} content={'4545'}></ToolTip>
         </div>
       </div>
     );
