@@ -72,7 +72,7 @@ export default {
         return 0
       } else {
         // 小数部分 - 防止浮点型产生的误差
-        let decimalNum = inter.toString(10).replaceAll(/-*\d*\./g, '0.')
+        let decimalNum = num.toString(10).replaceAll(/-*\d*\./g, '0.')
         return decimalNum.slice(2).length
       }
     },
