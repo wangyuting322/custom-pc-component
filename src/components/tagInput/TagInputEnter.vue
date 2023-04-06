@@ -2,8 +2,9 @@
 // 方法
 import { preventDefault, cancelBubble } from '@/utils/common'
 
+// 使用Enter分隔
 export default {
-  name: 'TagInput',
+  name: 'TagInputEnter',
   model: {
     props: 'value',
     event: 'change'
@@ -26,6 +27,8 @@ export default {
   },
   data () {
     return {
+      // 输入的值
+      inputText: '',
       // 输入框的值
       textValue: '',
       // tag标签
@@ -67,16 +70,14 @@ export default {
      * 输入文字
      */
     handleChange (e) {
-      // 去除开头的空格
-      const value = e.target.value.trimStart()
-      // 使用空格分隔 - 获取个连续空格视为一个空格
-      const cacheValue = value.split(/\s+/g)
-      const tagArr = cacheValue.filter((item, index) => index !== (cacheValue.length - 1)).map(item => ({ name: item }))
-      // 去除重复的tag
-      this.tagArr = [...this.tagArr, ...tagArr]
-      this.$emit('change', this.tagArr)
-      this.textValue = cacheValue[cacheValue.length - 1]
-      this.changeTagArr()
+      // 去除开头和结尾的空格
+      this.textValue = e.target.value.trim()
+      this.resetHeight()
+    },
+    /**
+     * 重置输入框的高度
+     */
+    resetHeight () {
       this.$nextTick(() => {
         const input = this.$refs['tag-input']
         if (input) {
@@ -92,14 +93,22 @@ export default {
       })
     },
     /**
-   * 监听按键
-   */
-    hanldeKeyDown (e) {
+     * 监听按键
+     */
+    onKeyup (e) {
+      let { key, code } = e
       const keyCode = e.keyCode
-      if (keyCode === 13) {
-        // enter
+      if (key === 'Enter' && code === 'Enter') {
+        // enter，且不是输入中的
         // 去除textarea的enter换行默认事件
         preventDefault(e)
+        // 截断
+        // 去除重复的tag
+        this.tagArr.push({ name: this.textValue })
+        this.$emit('change', this.tagArr)
+        this.textValue = ''
+        this.changeTagArr()
+        this.resetHeight()
       }
       if (keyCode === 32) {
         // 空格
@@ -163,35 +172,48 @@ export default {
     /**
      * 触发修改tagArr的事件
      */
-    changeTagArr(){
-      this.$emit('change',this.tagArr)
+    changeTagArr () {
+      this.$emit('change', this.tagArr)
+    },
+    /**
+     * 修改tag时输入enter
+     */
+    onKeyup2 (e) {
+      let { key, code } = e
+      if (key === 'Enter' && code === 'Enter') {
+        // enter，且不是输入中的
+        // 去除textarea的enter换行默认事件
+        preventDefault(e)
+        this.confirmName()
+      }
     },
     /**
      * 渲染tag
      */
     renderTagItem (item, index) {
-      const { id, name,cacheKey } = item
+      const { id, name, cacheKey } = item
       const { nameItem } = this
       return (
-          <div class='tag-item flex-row flex-ai-baseline m2 pl5 pr5 border-box' key={cacheKey} onClick={cancelBubble}>
-            {
-              nameItem && nameItem.index === index ? (
-                <textarea
-                  ref='rename-tag-input'
-                  class='rename-tag-input'
-                  style='width:150px'
-                  value={nameItem.name}
-                  onInput={this.changeName}
-                  maxlength={this.maxlength}
-                  minlength={1}
-                  rows={1}
-                  onBlur={this.confirmName}></textarea>
-              ) : (
-                <div class='tag-item-label  flex-row flex-ai-center flex-jc-center' onDblclick={() => this.handleDblclick(item, index)}>{name}</div>
-              )
-            }
-            <div class='tag-item-del flex-row flex-ai-center flex-jc-center ml5 mt3 mb3 pointer' onClick={() => this.handleDelTag(index)}>x</div>
-          </div>
+        <div class='tag-item flex-row flex-ai-baseline m2 pl5 pr5 border-box' key={cacheKey} onClick={cancelBubble}>
+          {
+            nameItem && nameItem.index === index ? (
+              <textarea
+                ref='rename-tag-input'
+                class='rename-tag-input'
+                style='width:150px'
+                value={nameItem.name}
+                onInput={this.changeName}
+                onKeyup={this.onKeyup2}
+                maxlength={this.maxlength}
+                minlength={1}
+                rows={1}
+                onBlur={this.confirmName}></textarea>
+            ) : (
+              <div class='tag-item-label  flex-row flex-ai-center flex-jc-center' onDblclick={() => this.handleDblclick(item, index)}>{name}</div>
+            )
+          }
+          <div class='tag-item-del flex-row flex-ai-center flex-jc-center ml5 mt3 mb3 pointer' onClick={() => this.handleDelTag(index)}>x</div>
+        </div>
       )
     }
   },
@@ -199,7 +221,7 @@ export default {
     value: {
       handler (newV) {
         if (newV) {
-          this.tagArr=newV
+          this.tagArr = newV
         } else {
           this.tagArr = []
         }
@@ -226,7 +248,7 @@ export default {
               return this.renderTagItem(item, index)
             })
           }
-          <textarea class='tag-input' ref='tag-input' value={this.textValue} onFocus={this.handleFocus} onBlur={this.handleBlur} rows={1} minlength={1} maxlength={this.maxlength} onInput={this.handleChange} onKeydown={this.hanldeKeyDown} onPaste={this.handlePaste} {...{ attrs: this.$attrs, props: { ...this.$attrs } }} />
+          <textarea class='tag-input' ref='tag-input' value={this.textValue} onFocus={this.handleFocus} onBlur={this.handleBlur} rows={1} minlength={1} maxlength={this.maxlength} onInput={this.handleChange} onKeyup={this.onKeyup} onPaste={this.handlePaste} {...{ attrs: this.$attrs, props: { ...this.$attrs } }} />
         </div>
       </div>
     )
@@ -249,7 +271,7 @@ export default {
   font-size: 13px;
   transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
-.tag-wrapper{
+.tag-wrapper {
   align-items: center;
 }
 .tag-item {

@@ -9,6 +9,7 @@ export default {
     return {
       tagArr1: ['sds', 'dsahfldkfld的身份的撒大第三的灵魂凤凰号火星疯狂的事犯了dasd'],
       tagArr: [],
+      tagArr2: [],
       theme:[
         {
           text:'dark',
@@ -100,8 +101,12 @@ export default {
         </div>
         <div>
           <span>3、标签输入框，使用空格进行分割</span>
-          <TagInput v-model={this.tagArr}></TagInput>
+          <TagInputSpace v-model={this.tagArr}></TagInputSpace>
+         
         </div>
+        <div>
+         <span>3、标签输入框，使用Enter进行分割</span>
+          <TagInputEnter v-model={this.tagArr2}></TagInputEnter></div>
         <div class='flex-row'>
           <span>4、div输入框</span>
           <div id="textarea" contenteditable="true" placeholder="请输入文字,不得少于100字"></div>
