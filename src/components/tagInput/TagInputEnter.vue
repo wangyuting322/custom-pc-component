@@ -92,19 +92,25 @@ export default {
         }
       })
     },
+    onKeydown (e) {
+      let { key, code } = e
+      if (key === 'Enter' && code === 'Enter') {
+        // 去除textarea的enter换行默认事件
+        preventDefault(e)
+      }
+    },
     /**
      * 监听按键
      */
     onKeyup (e) {
       let { key, code } = e
       const keyCode = e.keyCode
+      // 去除textarea的enter换行默认事件
       if (key === 'Enter' && code === 'Enter') {
         // enter，且不是输入中的
-        // 去除textarea的enter换行默认事件
-        preventDefault(e)
         // 截断
         // 去除重复的tag
-        this.tagArr.push({ name: this.textValue, key:new Date().getTime() })
+        this.tagArr.push({ name: this.textValue, key: new Date().getTime() })
         this.$emit('change', this.tagArr)
         this.textValue = ''
         this.changeTagArr()
@@ -165,7 +171,7 @@ export default {
      */
     confirmName () {
       const { id, name, index } = this.nameItem
-      this.tagArr.splice(index, 1, { id, name, key: new Date().getTime()})
+      this.tagArr.splice(index, 1, { id, name, key: new Date().getTime() })
       this.changeTagArr()
       this.nameItem = null
     },
@@ -182,8 +188,6 @@ export default {
       let { key, code } = e
       if (key === 'Enter' && code === 'Enter') {
         // enter，且不是输入中的
-        // 去除textarea的enter换行默认事件
-        preventDefault(e)
         this.confirmName()
       }
     },
@@ -203,6 +207,7 @@ export default {
                 style='width:150px'
                 value={nameItem.name}
                 onInput={this.changeName}
+                onKeydown={this.onKeydown}
                 onKeyup={this.onKeyup2}
                 maxlength={this.maxlength}
                 minlength={1}
@@ -248,7 +253,7 @@ export default {
               return this.renderTagItem(item, index)
             })
           }
-          <textarea class='tag-input' ref='tag-input' value={this.textValue} onFocus={this.handleFocus} onBlur={this.handleBlur} rows={1} minlength={1} maxlength={this.maxlength} onInput={this.handleChange} onKeyup={this.onKeyup} onPaste={this.handlePaste} {...{ attrs: this.$attrs, props: { ...this.$attrs } }} />
+          <textarea class='tag-input' ref='tag-input' value={this.textValue} onFocus={this.handleFocus} onBlur={this.handleBlur} rows={1} minlength={1} maxlength={this.maxlength} onInput={this.handleChange} onKeydown={this.onKeydown} onKeyup={this.onKeyup} onPaste={this.handlePaste} {...{ attrs: this.$attrs, props: { ...this.$attrs } }} />
         </div>
       </div>
     )
