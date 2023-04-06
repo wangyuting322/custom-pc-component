@@ -165,7 +165,7 @@ export default {
      */
     confirmName () {
       const { id, name, index } = this.nameItem
-      this.tagArr.splice(index, 1, { id, name })
+      this.tagArr.splice(index, 1, { id, name, key: new Date().getTime()})
       this.changeTagArr()
       this.nameItem = null
     },
