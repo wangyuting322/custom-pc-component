@@ -14,8 +14,8 @@ export default {
   },
   props: {
     value: {
-      type: String | Array,
-      default: []
+      type: [String, Array],
+      default: () => []
     },
     /**
      * tag的name的最大长度+1 - 要包含空格的长度
