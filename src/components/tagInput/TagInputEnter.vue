@@ -31,7 +31,7 @@ export default {
       inputText: '',
       // 输入框的值
       textValue: '',
-      // tag标签
+      // tag标签，对象数组，包含id，name，cacheKey
       tagArr: [],
       // 是否聚焦
       isActive: false,
@@ -104,7 +104,7 @@ export default {
         preventDefault(e)
         // 截断
         // 去除重复的tag
-        this.tagArr.push({ name: this.textValue })
+        this.tagArr.push({ name: this.textValue, key:new Date().getTime() })
         this.$emit('change', this.tagArr)
         this.textValue = ''
         this.changeTagArr()
@@ -191,10 +191,10 @@ export default {
      * 渲染tag
      */
     renderTagItem (item, index) {
-      const { id, name, cacheKey } = item
+      const { id, name, key } = item
       const { nameItem } = this
       return (
-        <div class='tag-item flex-row flex-ai-baseline m2 pl5 pr5 border-box' key={cacheKey} onClick={cancelBubble}>
+        <div class='tag-item flex-row flex-ai-baseline m2 pl5 pr5 border-box' key={key} onClick={cancelBubble}>
           {
             nameItem && nameItem.index === index ? (
               <textarea

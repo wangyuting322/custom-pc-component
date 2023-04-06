@@ -72,7 +72,7 @@ export default {
       const value = e.target.value.trimStart()
       // 使用空格分隔 - 获取个连续空格视为一个空格
       const cacheValue = value.split(/\s+/g)
-      const tagArr = cacheValue.filter((item, index) => index !== (cacheValue.length - 1)).map(item => ({ name: item }))
+      const tagArr = cacheValue.filter((item, index) => index !== (cacheValue.length - 1)).map(item => ({ name: item, key:new Date().getTime() }))
       // 去除重复的tag
       this.tagArr = [...this.tagArr, ...tagArr]
       this.$emit('change', this.tagArr)
@@ -171,10 +171,10 @@ export default {
      * 渲染tag
      */
     renderTagItem (item, index) {
-      const { id, name,cacheKey } = item
+      const { id, name, key } = item
       const { nameItem } = this
       return (
-          <div class='tag-item flex-row flex-ai-baseline m2 pl5 pr5 border-box' key={cacheKey} onClick={cancelBubble}>
+          <div class='tag-item flex-row flex-ai-baseline m2 pl5 pr5 border-box' key={key} onClick={cancelBubble}>
             {
               nameItem && nameItem.index === index ? (
                 <textarea
