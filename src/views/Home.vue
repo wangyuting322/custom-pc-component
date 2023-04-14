@@ -1,5 +1,4 @@
 <script>
-
 export default {
   name: "Home",
   components: {
@@ -131,6 +130,10 @@ export default {
           <ToolTip lineNum={1} content={'4545'}></ToolTip>
           <ToolTip lineNum={3} content={'454fsfsafasfaFsafasfbsahf飞洒发生asffasjfsakbfas飞洒发你拉石帆胜丰5'}></ToolTip>
           <ToolTip lineNum={1} content={'4545'}></ToolTip>
+        </div>
+        <div class='flex-col'>
+          <div>8、批量新增框</div>
+          <BatchTable></BatchTable>
         </div>
       </div>
     );
